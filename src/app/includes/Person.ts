@@ -34,6 +34,24 @@ export class Person {
         this._ssn = this.generateSSN();
     }
 
+    private generateSSN(): string {
+      let ssn: string = '';
+      for (let index = 0; index < 3; index++) {
+        const random_ascii = Math.floor((Math.random() * (65 - 90)) + 90);
+        ssn += String.fromCharCode(random_ascii)
+      }
+      for (let index = 0; index < 8; index++) {
+        const random_number = Math.floor(Math.random() * 9) + 0;
+        ssn += random_number;
+      }
+
+      return ssn;
+    }
+
+    private checkGender(gender: _gender): boolean {
+      return (this._gender === gender) ? true : false;
+    }
+
     set name(name: string) {
       this._name = name;
     }
@@ -74,29 +92,11 @@ export class Person {
       return BMI.normal;
     }
 
-    isAdult(): boolean {
-      return (this._age <= 18) ? false : true;
-    }
-
-    private checkGender(gender: _gender): boolean {
-      return (this._gender === gender) ? true : false;
+    ofLegalAge(): boolean {
+      return (this._age < 18) ? false : true;
     }
 
     toString(): string {
-      return JSON.stringify(this);
-    }
-
-    private generateSSN(): string {
-      let ssn: string = '';
-      for (let index = 0; index < 3; index++) {
-        const random_ascii = Math.floor((Math.random() * (65 - 90)) + 90);
-        ssn += String.fromCharCode(random_ascii)
-      }
-      for (let index = 0; index < 8; index++) {
-        const random_number = Math.floor(Math.random() * 9) + 0;
-        ssn += random_number;
-      }
-
-      return ssn;
+      return JSON.stringify(this, null, '\n\t');
     }
 }

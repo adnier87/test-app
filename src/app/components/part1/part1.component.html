@@ -1,0 +1,142 @@
+<mat-tab-group>
+  <mat-tab label="Person">
+    <div class="d-flex">
+      <div>
+        <form class="d-flex flex-column" [formGroup]="personForm" (ngSubmit)="createPerson()">
+          <div>
+            <mat-form-field>
+                <input matInput placeholder="name" formControlName="name" (keyup)="person ? onKey($event.target.value, 'name', 'person') : ''">
+                <mat-error *ngIf="personForm.get('name').touched && personForm.get('name').invalid">{{getErrorMessage(personForm.get('name'))}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="age" formControlName="age" (keyup)="person ? onKey($event.target.value, 'age', 'person') : ''">
+                <mat-error *ngIf="personForm.get('age').touched && personForm.get('age').invalid">{{getErrorMessage(personForm.get('age'))}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select placeholder="gender" formControlName="gender" [(ngModel)]="personGender" (ngModelChange)="person ? onGenderChange('person', personGender) : ''">
+                  <mat-option *ngFor="let gender of keys(genders)" [value]="gender">
+                    {{genders[gender]}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput formControlName="weight" (keyup)="person ? onKey($event.target.value, 'weight', 'person') : ''" placeholder="weight(kg)" value="0.0">
+              <mat-error *ngIf="personForm.get('weight').touched && personForm.get('weight').invalid">{{getErrorMessage(personForm.get('weight'))}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="height" (keyup)="person ? onKey($event.target.value, 'height', 'person') : ''" placeholder="height(m)" value="0.0">
+              <mat-error *ngIf="personForm.get('height').touched && personForm.get('height').invalid">{{getErrorMessage(personForm.get('height'))}}</mat-error>
+            </mat-form-field>
+          </div>
+          <button mat-raised-button type="submit" color="primary" [disabled]="person || personForm.invalid ? '' : null">Create</button>
+          <p><mat-hint *ngIf="person">You can modify data in inputs</mat-hint></p>
+        </form>
+      </div>
+      <div>
+        <pre *ngIf="person">{{ person.toString() }}</pre>
+        <p *ngIf="person" [ngSwitch]="person.calculateBMI()">
+          <span *ngSwitchCase="-1">This person is underweight</span>
+          <span *ngSwitchCase="1">This person is overweight</span>
+          <span *ngSwitchDefault>This person is normal weight</span>
+        </p>
+        <p *ngIf="person"></p>
+        <p *ngIf="person">This person <span *ngIf="person.ofLegalAge(); else noLegalAge">is</span><ng-template #noLegalAge>isn't</ng-template> of legal age</p>
+      </div>
+    </div>
+  </mat-tab>
+  <mat-tab label="Another Person">
+      <div class="d-flex">
+        <div>
+          <form class="d-flex flex-column" [formGroup]="anotherPersonForm" (ngSubmit)="createAnotherPerson()">
+            <div>
+              <mat-form-field>
+                  <input matInput placeholder="name" formControlName="name" (keyup)="anotherPerson ? onKey($event.target.value, 'name', 'anotherPerson') : ''">
+                  <mat-error *ngIf="anotherPersonForm.get('name').touched && anotherPersonForm.get('name').invalid">{{getErrorMessage(anotherPersonForm.get('name'))}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <input matInput placeholder="age" formControlName="age" (keyup)="anotherPerson ? onKey($event.target.value, 'age', 'anotherPerson') : ''">
+                  <mat-error *ngIf="anotherPersonForm.get('age').touched && anotherPersonForm.get('age').invalid">{{getErrorMessage(anotherPersonForm.get('age'))}}</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                  <mat-select placeholder="gender" formControlName="gender" [(ngModel)]="anotherPersonGender" (ngModelChange)="anotherPerson ? onGenderChange('anotherPerson', anotherPersonGender) : ''">
+                    <mat-option *ngFor="let gender of keys(genders)" [value]="gender">
+                      {{genders[gender]}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field>
+                <input matInput formControlName="weight" (keyup)="anotherPerson ? onKey($event.target.value, 'weight', 'anotherPerson') : ''" placeholder="weight(kg)" value="0.0">
+                <mat-error *ngIf="anotherPersonForm.get('weight').touched && anotherPersonForm.get('weight').invalid">{{getErrorMessage(anotherPersonForm.get('weight'))}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput formControlName="height" (keyup)="anotherPerson ? onKey($event.target.value, 'height', 'anotherPerson') : ''" placeholder="height(m)" value="0.0">
+                <mat-error *ngIf="anotherPersonForm.get('height').touched && anotherPersonForm.get('height').invalid">{{getErrorMessage(anotherPersonForm.get('height'))}}</mat-error>
+              </mat-form-field>
+            </div>
+            <button mat-raised-button type="submit" color="primary" [disabled]="anotherPerson || anotherPersonForm.invalid ? '' : null">Create</button>
+            <p><mat-hint *ngIf="anotherPerson">You can modify data in inputs</mat-hint></p>
+          </form>
+        </div>
+        <div>
+          <pre *ngIf="anotherPerson">{{ anotherPerson.toString() }}</pre>
+          <p *ngIf="anotherPerson" [ngSwitch]="anotherPerson.calculateBMI()">
+            <span *ngSwitchCase="-1">This person is underweight</span>
+            <span *ngSwitchCase="1">This person is overweight</span>
+            <span *ngSwitchDefault>This person is normal weight</span>
+          </p>
+          <p *ngIf="anotherPerson"></p>
+          <p *ngIf="anotherPerson">This person <span *ngIf="anotherPerson.ofLegalAge(); else noLegalAge">is</span><ng-template #noLegalAge>isn't</ng-template> of legal age</p>
+        </div>
+      </div>
+    </mat-tab>
+  <mat-tab label="Just Another Person">
+    <div class="d-flex">
+      <div>
+        <form class="d-flex flex-column" [formGroup]="justAnotherPersonForm" (ngSubmit)="createAnotherPerson()">
+          <div>
+            <mat-form-field>
+                <input matInput placeholder="name" formControlName="name" (keyup)="justAnotherPerson ? onKey($event.target.value, 'name', 'justAnotherPerson') : ''">
+                <mat-error *ngIf="justAnotherPersonForm.get('name').touched && justAnotherPersonForm.get('name').invalid">{{getErrorMessage(justAnotherPersonForm.get('name'))}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <input matInput placeholder="age" formControlName="age" (keyup)="justAnotherPerson ? onKey($event.target.value, 'age', 'justAnotherPerson') : ''">
+                <mat-error *ngIf="justAnotherPersonForm.get('age').touched && justAnotherPersonForm.get('age').invalid">{{getErrorMessage(justAnotherPersonForm.get('age'))}}</mat-error>
+              </mat-form-field>
+              <mat-form-field>
+                <mat-select placeholder="gender" formControlName="gender" [(ngModel)]="justAnotherPersonGender" (ngModelChange)="justAnotherPerson ? onGenderChange('justAnotherPerson', justAnotherPersonGender) : ''">
+                  <mat-option *ngFor="let gender of keys(genders)" [value]="gender">
+                    {{genders[gender]}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <input matInput formControlName="weight" (keyup)="justAnotherPerson ? onKey($event.target.value, 'weight', 'justAnotherPerson') : ''" placeholder="weight(kg)" value="0.0">
+              <mat-error *ngIf="justAnotherPersonForm.get('weight').touched && justAnotherPersonForm.get('weight').invalid">{{getErrorMessage(justAnotherPersonForm.get('weight'))}}</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="height" (keyup)="justAnotherPerson ? onKey($event.target.value, 'height', 'justAnotherPerson') : ''" placeholder="height(m)" value="0.0">
+              <mat-error *ngIf="justAnotherPersonForm.get('height').touched && justAnotherPersonForm.get('height').invalid">{{getErrorMessage(justAnotherPersonForm.get('height'))}}</mat-error>
+            </mat-form-field>
+          </div>
+          <p><mat-hint *ngIf="justAnotherPerson">You can modify data in inputs</mat-hint></p>
+        </form>
+      </div>
+      <div>
+        <pre *ngIf="justAnotherPerson">{{ justAnotherPerson.toString() }}</pre>
+        <p *ngIf="justAnotherPerson" [ngSwitch]="justAnotherPerson.calculateBMI()">
+          <span *ngSwitchCase="-1">This person is underweight</span>
+          <span *ngSwitchCase="1">This person is overweight</span>
+          <span *ngSwitchDefault>This person is normal weight</span>
+        </p>
+        <p *ngIf="justAnotherPerson"></p>
+        <p *ngIf="justAnotherPerson">This person <span *ngIf="justAnotherPerson.ofLegalAge(); else noLegalAge">is</span><ng-template #noLegalAge>isn't</ng-template> of legal age</p>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
