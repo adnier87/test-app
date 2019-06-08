@@ -6,21 +6,28 @@ import {
   MatButtonModule,
   MatInputModule,
   MatFormFieldModule,
-  MatSelectModule
+  MatSelectModule,
+  MatTableModule,
+  MatIconModule,
+  MatDialogModule,
+  MatCardModule
 } from "@angular/material";
 import { MatTabsModule } from "@angular/material/tabs";
+import { HttpClientModule } from "@angular/common/http";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { Part1Component } from './components/part1/part1.component';
 import { Part2Component } from './components/part2/part2.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ClientDetailsComponent } from './components/client-details/client-details.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     Part1Component,
-    Part2Component
+    Part2Component,
+    ClientDetailsComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +40,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatInputModule,
     MatFormFieldModule,
     MatTabsModule,
-    MatSelectModule
+    MatSelectModule,
+    MatTableModule,
+    MatIconModule,
+    MatDialogModule,
+    MatCardModule,
+    HttpClientModule
+  ],
+  entryComponents: [
+    ClientDetailsComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

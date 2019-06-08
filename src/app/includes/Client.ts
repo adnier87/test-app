@@ -1,0 +1,30 @@
+export class Client {
+  Usuario_ID: number;
+  Nombre: string;
+  Apellidos: string;
+  Nombre_Usuario: string;
+  Contraseña: string;
+  AF: number;
+  Actividad_Fisica_ID: number;
+  Activo: boolean;
+  Cliente_ID: number;
+  Correo_Electronico: string;
+  De_Sistema: boolean
+  Dieta_ID: number
+  ETA: number;
+  Edad: number;
+  Estatura: number;
+  Fecha_Actualizacion: string;
+  Fecha_Creacion: string;
+  GEB: number;
+  Gasto_Energetico_Total: number;
+  Genero_ID: number;
+  IMC: number;
+  Objetivo_ID: number
+  Orden: number;
+  Peso: number;
+  Peso_Maximo: number;
+  Peso_Minimo: number;
+  Tipo_Cliente_ID: number;
+  Visible: boolean;
+}
